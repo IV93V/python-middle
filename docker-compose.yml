@@ -1,0 +1,16 @@
+version: "3.6"
+
+services:
+  db:
+    image: postgres:13.6-alpine
+    environment:
+      - POSTGRES_USER=python_middle
+      - POSTGRES_PASSWORD=python_middle
+      - POSTGRES_DB=python_middle
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "7432:5432"
+
+volumes:
+  postgres_data:
