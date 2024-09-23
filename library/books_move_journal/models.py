@@ -35,6 +35,11 @@ class BooksMoveJournal(models.Model):
 
 def GiveBookToReader(book_name,date,reader_card,place,librarier):
     #Выдача книги
+        # book_number - номер книги
+        # date        - дата выдачи
+        # reader_card - id карты читателя
+        # place       - выдача книг в зал (2) или на дом (1)
+        # librarier   - id библиотекаря
     book_instance = Books.objects.filter(name=book_name, shelf__isnull = False).first()
     reader_book_count_check = ReaderCardBook.objects.filter(readercards=reader_card, return_date__isnull = True).count()
     if reader_book_count_check >=3:
@@ -91,6 +96,11 @@ def GetBookFromReader(book_number,date,reader_card,shelf,librarier):
 
 def MoveBookToShelf(book_number,date,shelf,librarier,is_sort_operation):
     #Перемещение книг с полки на полку
+        # book_number - номер книги
+        # date        - дата перемещения
+        # shelf       - id полки, на которую убираем книгу. Может быть None
+        # librarier   - id библиотекаря
+        # is_sort_operation - True, если делаем сортировку книг - предварительно очищаем данные о расположении книг на полках
     try:
         if is_sort_operation == True:
             book_instance = Books.objects.get(book_number=book_number)
@@ -115,6 +125,8 @@ def MoveBookToShelf(book_number,date,shelf,librarier,is_sort_operation):
 
 def SortBooks(librarier,date):
     #Сортировка книг
+        # librarier   - id библиотекаря
+        # date        - дата перемещения
     books_list = Books.objects.filter(shelf__isnull=False).order_by('edition_kind','name','edition_date__year','pages_count')
     books_list_to_sort_tmp = list(books_list.values_list('id','shelf'))
     books_list_to_sort = copy.deepcopy(books_list_to_sort_tmp)
