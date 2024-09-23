@@ -1,5 +1,6 @@
 from django.db import models
 from person.models import Librariers
+from django.db.models import Count
 
 
 class Halls(models.Model):
@@ -27,3 +28,4 @@ class Shelf(models.Model):
     class Meta:
         db_table = 'Shelf'
         verbose_name = 'Полки'
+        unique_together = (('number', 'rack'),)

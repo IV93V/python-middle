@@ -13,13 +13,13 @@ class EditionKinds(models.Model):
 
 class Books(models.Model):
     name = models.CharField(max_length=50)
-    author = models.ForeignKey(Authors, on_delete = models.CASCADE)
+    author = models.ManyToManyField(Authors, related_name='books')
     edition_kind = models.ForeignKey(EditionKinds, on_delete = models.CASCADE)
     book_number = models.CharField(max_length=10, unique=True)
     pages_count = models.IntegerField()
     edition_date = models.DateField()
     Note = models.TextField(blank=True, null=True)
-    shelf = models.ForeignKey(Shelf, on_delete = models.CASCADE)
+    shelf = models.ForeignKey(Shelf, on_delete = models.CASCADE, null = True, unique=True)
 
     class Meta:
         db_table = 'Books'

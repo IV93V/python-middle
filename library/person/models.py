@@ -1,11 +1,15 @@
 from django.db import models
 
 class Agents (models.Model):
+    SEX_CHOICE = (
+        (0, 'Женский'),
+        (1, 'Мужской'),
+    )
     surname = models.CharField(max_length =30)
     firstname = models.CharField(max_length =30)
     lastname = models.CharField(max_length =30, blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
-    sex = models.BooleanField()
+    sex = models.CharField(max_length=10, choices=SEX_CHOICE)
 
     class Meta:
         db_table = 'Agents'
