@@ -16,6 +16,9 @@ class Agents(models.Model):
         db_table = "Agents"
         verbose_name = "Контрагенты"
 
+    def __str__(self):
+        return self.surname+' '+self.firstname+' '+self.lastname
+
 
 class Authors(models.Model):
     pid = models.ForeignKey(Agents, on_delete=models.CASCADE, unique=True)

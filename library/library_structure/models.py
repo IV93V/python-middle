@@ -6,6 +6,14 @@ class Halls(models.Model):
     name = models.CharField(max_length=100)
     librarer = models.ForeignKey(Librariers, on_delete=models.CASCADE)
 
+    @property
+    def child_racks(self):
+        qs = Racks.objects.filter(hall=self.id)
+        racks = []
+        for elem in qs:
+            racks.append(elem.number)
+        return ', '.join(racks)
+
     class Meta:
         db_table = "Halls"
         verbose_name = "Залы библиотеки"
@@ -14,6 +22,14 @@ class Halls(models.Model):
 class Racks(models.Model):
     number = models.CharField(max_length=10)
     hall = models.ForeignKey(Halls, on_delete=models.CASCADE)
+
+    @property
+    def child_shelfs(self):
+        qs = Shelf.objects.filter(rack=self.id)
+        shelfs = []
+        for elem in qs:
+            shelfs.append(elem.number)
+        return ', '.join(shelfs)
 
     class Meta:
         db_table = "Racks"

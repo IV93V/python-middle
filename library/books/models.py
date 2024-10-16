@@ -10,6 +10,9 @@ class EditionKinds(models.Model):
         db_table = "EditionKinds"
         verbose_name = "Виды изданий"
 
+    def __str__(self):
+        return self.edition_type
+
 
 class Books(models.Model):
     name = models.CharField(max_length=50)
@@ -18,9 +21,12 @@ class Books(models.Model):
     book_number = models.CharField(max_length=10, unique=True)
     pages_count = models.IntegerField()
     edition_date = models.DateField()
-    Note = models.TextField(blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
     shelf = models.ForeignKey(Shelf, on_delete=models.CASCADE, null=True, unique=True)
 
     class Meta:
         db_table = "Books"
         verbose_name = "Книги"
+
+    def __str__(self):
+        return self.name+' '+self.book_number

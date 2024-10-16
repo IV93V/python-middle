@@ -17,7 +17,9 @@ class OutOfTerms(models.Manager):
 
 class ReaderCards(models.Model):
     agent = models.ForeignKey(Agents, on_delete=models.CASCADE, unique=True)
-
+    def __str__(self):
+        agt = Agents.__str__(self.agent)
+        return 'Карточка читателя '+agt
     # book = models.ForeignKey(ReaderCardBook, on_delete=models.CASCADE, related_name='books')
     # reading_place = models.CharField(max_length=10, choices=READING_PLACE)
 
